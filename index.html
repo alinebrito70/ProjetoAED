@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,113 +7,78 @@
 
     <link rel="stylesheet" href="style.css">
 
-    <!-- Biblioteca para desenhar grafos -->
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
 </head>
 <body>
 
-    <header>
-        <h1>🚌 Sistema Inteligente de Rotas de Petrolina</h1>
-        <p>
-            Utilizando Grafos e Algoritmo de Dijkstra para encontrar
-            a melhor rota entre dois pontos da cidade.
-        </p>
-    </header>
+<header>
+    <h1>🚌 Sistema Inteligente de Rotas de Petrolina</h1>
+    <p>Projeto em Python com Grafos e Algoritmo de Dijkstra</p>
+</header>
 
-    <main>
+<main>
+    <section class="painel">
 
-        <!-- Painel esquerdo -->
-        <section class="painel">
+        <div class="card">
+            <h2>Buscar Melhor Rota</h2>
 
-            <div class="card">
-                <h2>Buscar Melhor Rota</h2>
+            <label for="origem">Origem</label>
+            <select id="origem"></select>
 
-                <label for="origem">Origem</label>
-                <select id="origem">
-                    <option>UNIVASF</option>
-                    <option>UPE</option>
-                    <option>Terminal Central</option>
-                    <option>River Shopping</option>
-                    <option>Rodoviária</option>
-                    <option>João de Deus</option>
-                    <option>José e Maria</option>
-                    <option>Cohab VI</option>
-                    <option>São Gonçalo</option>
-                    <option>Pedra Linda</option>
-                </select>
+            <label for="destino">Destino</label>
+            <select id="destino"></select>
 
-                <label for="destino">Destino</label>
-                <select id="destino">
-                    <option>UNIVASF</option>
-                    <option>UPE</option>
-                    <option>Terminal Central</option>
-                    <option>River Shopping</option>
-                    <option>Rodoviária</option>
-                    <option>João de Deus</option>
-                    <option>José e Maria</option>
-                    <option>Cohab VI</option>
-                    <option>São Gonçalo</option>
-                    <option>Pedra Linda</option>
-                </select>
+            <button onclick="calcularRota()">Encontrar Melhor Rota</button>
+            <button class="btn-limpar" onclick="limparResultado()">Limpar Resultado</button>
+        </div>
 
-                <button onclick="calcularRota()">
-                    Encontrar Melhor Rota
-                </button>
+        <div class="card">
+            <h2>Resultado</h2>
+
+            <div id="rotaResultado">
+                Selecione origem e destino.
             </div>
 
-            <div class="card">
-                <h2>Resultado</h2>
+            <div id="tempoResultado"></div>
+            <div id="estatisticasResultado"></div>
+        </div>
 
-                <div id="rotaResultado">
-                    Selecione origem e destino.
-                </div>
+        <div class="card">
+            <h2>Informações do Grafo</h2>
 
-                <div id="tempoResultado">
-                </div>
+            <p><strong>Tipo:</strong> Grafo ponderado não direcionado</p>
+            <p><strong>Algoritmo:</strong> Dijkstra</p>
+            <p><strong>Linguagem principal:</strong> Python</p>
+
+            <hr>
+
+            <p>Cada local representa um vértice.</p>
+            <p>As ligações representam arestas.</p>
+            <p>Os pesos representam o tempo médio em minutos.</p>
+        </div>
+
+    </section>
+
+    <section class="grafo-container">
+        <div class="card-grafo">
+            <h2>Visualização do Grafo</h2>
+            <div id="cy"></div>
+        </div>
+
+        <div class="card-passos">
+            <h2>Passo a Passo do Dijkstra</h2>
+            <div id="passosDijkstra">
+                O passo a passo aparecerá aqui após calcular a rota.
             </div>
+        </div>
+    </section>
+</main>
 
-            <div class="card">
-                <h2>Informações do Grafo</h2>
+<footer>
+    Projeto Acadêmico - Estrutura de Dados - Grafos
+</footer>
 
-                <p><strong>Vértices:</strong> 10</p>
-                <p><strong>Arestas:</strong> 14</p>
-                <p><strong>Algoritmo:</strong> Dijkstra</p>
-
-                <hr>
-
-                <p>
-                    Cada local representa um vértice do grafo.
-                </p>
-
-                <p>
-                    As conexões representam arestas com pesos
-                    correspondentes ao tempo médio de deslocamento.
-                </p>
-            </div>
-
-        </section>
-
-        <!-- Painel direito -->
-        <section class="grafo-container">
-
-            <div class="card-grafo">
-
-                <h2>Visualização do Grafo</h2>
-
-                <div id="cy"></div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-    <footer>
-        Projeto Acadêmico - Teoria dos Grafos
-    </footer>
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
-```
