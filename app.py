@@ -28,7 +28,6 @@ def dijkstra(origem, destino):
     distancias = {}
     anteriores = {}
     nao_visitados = []
-    passos = []
 
     for vertice in grafo:
         distancias[vertice] = float("inf")
@@ -36,25 +35,33 @@ def dijkstra(origem, destino):
         nao_visitados.append(vertice)
 
     distancias[origem] = 0
-    passos.append(f"Iniciando em {origem}. Distância inicial = 0.")
+    passos = [
+        f"1. Começamos em {origem}, com distância 0.",
+        f"2. O algoritmo analisa os caminhos possíveis a partir de {origem}."
+    ]
 
     while nao_visitados:
         atual = min(nao_visitados, key=lambda v: distancias[v])
         nao_visitados.remove(atual)
 
-        passos.append(f"Visitando o vértice {atual}.")
+        if distancias[atual] == float("inf"):
+            break
 
         if atual == destino:
-            passos.append(f"Destino {destino} encontrado.")
+            passos.append(
+                f"3. A menor rota até {destino} foi encontrada."
+            )
             break
 
         for vizinho, peso in grafo[atual].items():
+            if vizinho not in nao_visitados:
+                continue
+
             nova_distancia = distancias[atual] + peso
 
             if nova_distancia < distancias[vizinho]:
                 distancias[vizinho] = nova_distancia
                 anteriores[vizinho] = atual
-                passos.append(f"Atualizou {vizinho} para {nova_distancia} minutos.")
 
     caminho = []
     atual = destino
@@ -62,6 +69,14 @@ def dijkstra(origem, destino):
     while atual is not None:
         caminho.insert(0, atual)
         atual = anteriores[atual]
+
+    passos.append(
+        f"4. Caminho escolhido: {' → '.join(caminho)}."
+    )
+
+    passos.append(
+        f"5. Tempo total: {distancias[destino]} minutos."
+    )
 
     return caminho, distancias[destino], passos, distancias
 
@@ -143,8 +158,6 @@ def api_rota():
 
     caminho, distancia, passos, distancias = dijkstra(origem, destino)
 
-    # float("inf") não é JSON válido (Infinity quebra o JSON.parse do navegador).
-    # Vértices ainda não alcançados quando o algoritmo para no destino viram null.
     distancias_serializaveis = {
         vertice: (valor if valor != float("inf") else None)
         for vertice, valor in distancias.items()
