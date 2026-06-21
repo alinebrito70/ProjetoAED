@@ -40,13 +40,18 @@ async function carregarGrafo() {
                 style: {
                     "background-color": "#2563eb",
                     "label": "data(id)",
-                    "color": "#000",
+                    "color": "#0f172a",
                     "text-valign": "bottom",
                     "text-halign": "center",
                     "font-size": "12px",
-                    "width": 45,
-                    "height": 45,
-                    "border-width": 0,
+                    "font-weight": "700",
+                    "text-margin-y": "8px",
+                    "text-outline-width": 3,
+                    "text-outline-color": "#ffffff",
+                    "width": 48,
+                    "height": 48,
+                    "border-width": 4,
+                    "border-color": "#dbeafe",
                     "transition-property": "background-color, border-width, border-color, width, height",
                     "transition-duration": "0.3s"
                 }
@@ -60,6 +65,10 @@ async function carregarGrafo() {
                     "line-cap": "round",
                     "label": "data(peso)",
                     "font-size": "12px",
+                    "font-weight": "700",
+                    "color": "#334155",
+                    "text-outline-width": 3,
+                    "text-outline-color": "#ffffff",
                     "transition-property": "line-color, width",
                     "transition-duration": "0.3s"
                 }
@@ -67,18 +76,19 @@ async function carregarGrafo() {
             {
                 selector: "node.rota",
                 style: {
-                    "background-color": "#dc2626",
-                    "border-width": 4,
-                    "border-color": "#fecaca",
-                    "width": 50,
-                    "height": 50
+                    "background-color": "#10b981",
+                    "border-width": 6,
+                    "border-color": "#bbf7d0",
+                    "width": 56,
+                    "height": 56,
+                    "z-index": 999
                 }
             },
             {
                 selector: "edge.rota",
                 style: {
-                    "line-color": "#dc2626",
-                    "width": 7,
+                    "line-color": "#10b981",
+                    "width": 8,
                     "line-cap": "round",
                     "z-index": 999
                 }
@@ -86,9 +96,12 @@ async function carregarGrafo() {
         ],
 
         layout: {
-            name: "circle"
+            name: "circle",
+            padding: 30
         }
     });
+
+    cy.fit(undefined, 35);
 }
 
 async function calcularRota() {
