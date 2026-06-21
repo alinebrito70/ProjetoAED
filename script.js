@@ -32,6 +32,7 @@ async function carregarGrafo() {
     cy = cytoscape({
         container: document.getElementById("cy"),
         elements: elementos,
+        autoungrabify: true,
 
         style: [
             {
@@ -44,7 +45,10 @@ async function carregarGrafo() {
                     "text-halign": "center",
                     "font-size": "12px",
                     "width": 45,
-                    "height": 45
+                    "height": 45,
+                    "border-width": 0,
+                    "transition-property": "background-color, border-width, border-color, width, height",
+                    "transition-duration": "0.3s"
                 }
             },
             {
@@ -53,16 +57,30 @@ async function carregarGrafo() {
                     "width": 3,
                     "line-color": "#94a3b8",
                     "curve-style": "bezier",
+                    "line-cap": "round",
                     "label": "data(peso)",
-                    "font-size": "12px"
+                    "font-size": "12px",
+                    "transition-property": "line-color, width",
+                    "transition-duration": "0.3s"
                 }
             },
             {
-                selector: ".rota",
+                selector: "node.rota",
                 style: {
                     "background-color": "#dc2626",
+                    "border-width": 4,
+                    "border-color": "#fecaca",
+                    "width": 50,
+                    "height": 50
+                }
+            },
+            {
+                selector: "edge.rota",
+                style: {
                     "line-color": "#dc2626",
-                    "width": 6
+                    "width": 7,
+                    "line-cap": "round",
+                    "z-index": 999
                 }
             }
         ],
