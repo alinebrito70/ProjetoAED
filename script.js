@@ -1,7 +1,13 @@
+const API_URL = "http://127.0.0.1:5000";
 let cy;
 
+window.onload = async function () {
+    await carregarLocais();
+    await carregarGrafo();
+};
+
 async function carregarLocais() {
-    const resposta = await fetch("http://127.0.0.1:5000/api/locais");
+    const resposta = await fetch(`${API_URL}/api/locais`);
     const locais = await resposta.json();
 
     const origem = document.getElementById("origem");
@@ -11,15 +17,8 @@ async function carregarLocais() {
     destino.innerHTML = "";
 
     locais.forEach(local => {
-        const optionOrigem = document.createElement("option");
-        optionOrigem.value = local;
-        optionOrigem.textContent = local;
-        origem.appendChild(optionOrigem);
-
-        const optionDestino = document.createElement("option");
-        optionDestino.value = local;
-        optionDestino.textContent = local;
-        destino.appendChild(optionDestino);
+        origem.innerHTML += `<option value="${local}">${local}</option>`;
+        destino.innerHTML += `<option value="${local}">${local}</option>`;
     });
 
     origem.value = "UNIVASF";
@@ -27,7 +26,7 @@ async function carregarLocais() {
 }
 
 async function carregarGrafo() {
-    const resposta = await fetch(fetch("http://127.0.0.1:5000/api/grafo"));
+    const resposta = await fetch(`${API_URL}/api/grafo`);
     const elementos = await resposta.json();
 
     cy = cytoscape({
@@ -44,8 +43,8 @@ async function carregarGrafo() {
                     "text-valign": "bottom",
                     "text-halign": "center",
                     "font-size": "12px",
-                    "width": 42,
-                    "height": 42
+                    "width": 45,
+                    "height": 45
                 }
             },
             {
@@ -69,7 +68,7 @@ async function carregarGrafo() {
         ],
 
         layout: {
-            name: "cose"
+            name: "circle"
         }
     });
 }
@@ -78,15 +77,12 @@ async function calcularRota() {
     const origem = document.getElementById("origem").value;
     const destino = document.getElementById("destino").value;
 
-    const resposta = await fetch("http://127.0.0.1:5000/api/rota", {
+    const resposta = await fetch(`${API_URL}/api/rota`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            origem: origem,
-            destino: destino
-        })
+        body: JSON.stringify({ origem, destino })
     });
 
     const resultado = await resposta.json();
@@ -151,8 +147,7 @@ function limparResultado() {
     document.getElementById("passosDijkstra").innerHTML =
         "O passo a passo aparecerá aqui após calcular a rota.";
 
-    cy.elements().removeClass("rota");
+    if (cy) {
+        cy.elements().removeClass("rota");
+    }
 }
-
-carregarLocais();
-carregarGrafo();
