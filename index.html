@@ -1,0 +1,120 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Inteligente de Rotas de Petrolina</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Biblioteca para desenhar grafos -->
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1>🚌 Sistema Inteligente de Rotas de Petrolina</h1>
+        <p>
+            Utilizando Grafos e Algoritmo de Dijkstra para encontrar
+            a melhor rota entre dois pontos da cidade.
+        </p>
+    </header>
+
+    <main>
+
+        <!-- Painel esquerdo -->
+        <section class="painel">
+
+            <div class="card">
+                <h2>Buscar Melhor Rota</h2>
+
+                <label for="origem">Origem</label>
+                <select id="origem">
+                    <option>UNIVASF</option>
+                    <option>UPE</option>
+                    <option>Terminal Central</option>
+                    <option>River Shopping</option>
+                    <option>Rodoviária</option>
+                    <option>João de Deus</option>
+                    <option>José e Maria</option>
+                    <option>Cohab VI</option>
+                    <option>São Gonçalo</option>
+                    <option>Pedra Linda</option>
+                </select>
+
+                <label for="destino">Destino</label>
+                <select id="destino">
+                    <option>UNIVASF</option>
+                    <option>UPE</option>
+                    <option>Terminal Central</option>
+                    <option>River Shopping</option>
+                    <option>Rodoviária</option>
+                    <option>João de Deus</option>
+                    <option>José e Maria</option>
+                    <option>Cohab VI</option>
+                    <option>São Gonçalo</option>
+                    <option>Pedra Linda</option>
+                </select>
+
+                <button onclick="calcularRota()">
+                    Encontrar Melhor Rota
+                </button>
+            </div>
+
+            <div class="card">
+                <h2>Resultado</h2>
+
+                <div id="rotaResultado">
+                    Selecione origem e destino.
+                </div>
+
+                <div id="tempoResultado">
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Informações do Grafo</h2>
+
+                <p><strong>Vértices:</strong> 10</p>
+                <p><strong>Arestas:</strong> 14</p>
+                <p><strong>Algoritmo:</strong> Dijkstra</p>
+
+                <hr>
+
+                <p>
+                    Cada local representa um vértice do grafo.
+                </p>
+
+                <p>
+                    As conexões representam arestas com pesos
+                    correspondentes ao tempo médio de deslocamento.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- Painel direito -->
+        <section class="grafo-container">
+
+            <div class="card-grafo">
+
+                <h2>Visualização do Grafo</h2>
+
+                <div id="cy"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        Projeto Acadêmico - Teoria dos Grafos
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
+```
