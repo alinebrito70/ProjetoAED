@@ -127,21 +127,34 @@ def api_grafo():
 
 @app.route("/api/rota", methods=["POST"])
 def api_rota():
-    dados = request.get_json()
+    dados = request.get_json(silent=True) or {}
 
     origem = dados.get("origem")
     destino = dados.get("destino")
+
+    if not origem or not destino:
+        return jsonify({"erro": "Selecione origem e destino."}), 400
+
+    if origem not in grafo or destino not in grafo:
+        return jsonify({"erro": "Local inválido."}), 400
 
     if origem == destino:
         return jsonify({"erro": "Escolha origem e destino diferentes."}), 400
 
     caminho, distancia, passos, distancias = dijkstra(origem, destino)
 
+    # float("inf") não é JSON válido (Infinity quebra o JSON.parse do navegador).
+    # Vértices ainda não alcançados quando o algoritmo para no destino viram null.
+    distancias_serializaveis = {
+        vertice: (valor if valor != float("inf") else None)
+        for vertice, valor in distancias.items()
+    }
+
     return jsonify({
         "caminho": caminho,
         "distancia": distancia,
         "passos": passos,
-        "distancias": distancias,
+        "distancias": distancias_serializaveis,
         "vertices_caminho": len(caminho),
         "arestas_caminho": len(caminho) - 1,
         "total_vertices": len(grafo),
